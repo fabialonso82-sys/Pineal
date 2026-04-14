@@ -1,0 +1,121 @@
+# Component Spec Template
+# Used by: UX Agent (Phase 2: Component Specifications)
+# Language: English (Constitution Article VII)
+
+template:
+  name: Component Spec
+  version: "1.0.0"
+  description: >
+    UI component specification document. Defines variants, states,
+    anatomy, props, accessibility, and responsive behavior.
+
+output_path: chati.dev/artifacts/4-UX/components/
+
+fields:
+  - name: id
+    type: string
+    description: "Unique component identifier (kebab-case)"
+    required: true
+  - name: name
+    type: string
+    description: "Human-readable component name"
+    required: true
+  - name: category
+    type: enum
+    values: [primitive, composite, layout, feedback, navigation, data-display, form]
+    description: "Component category for organization"
+    required: true
+  - name: description
+    type: string
+    description: "One-sentence description of the component purpose"
+    required: true
+  - name: variants
+    type: array
+    description: "Visual variants (primary, secondary, ghost, destructive, etc.)"
+    required: true
+  - name: sizes
+    type: array
+    description: "Size variants (xs, sm, md, lg, xl)"
+    required: true
+  - name: states
+    type: object
+    description: "Component states organized by category"
+    required: true
+    sub_fields:
+      - name: interactive
+        type: array
+        description: "REQUIRED: default, hover, active, focus, disabled"
+        required: true
+      - name: input
+        type: array
+        description: "For input components: empty, filled, error, success, loading"
+        required: false
+      - name: data_view
+        type: array
+        description: "For data display components: populated, empty, loading, error, skeleton"
+        required: false
+      - name: animation
+        type: object
+        description: "Animation states using motion tokens from Design System Layer 5"
+        required: false
+        sub_fields:
+          - name: entrance
+            type: object
+            description: "How component enters the DOM (opacity + translateY default)"
+            example:
+              property: "opacity + translateY"
+              duration: "--motion-duration-normal"
+              easing: "--motion-ease-decelerate"
+          - name: hover
+            type: object
+            description: "Transform on hover — GPU properties only"
+            example:
+              property: "transform"
+              duration: "--motion-duration-fast"
+              easing: "--motion-ease-spring"
+          - name: exit
+            type: object
+            description: "How component exits the DOM"
+            example:
+              property: "opacity + scale"
+              duration: "--motion-duration-fast"
+              easing: "--motion-ease-accelerate"
+          - name: reduced_motion
+            type: object
+            description: "Fallback for prefers-reduced-motion"
+            example:
+              fallback: "opacity only, duration --motion-duration-fast"
+  - name: anatomy
+    type: object
+    description: "Component parts and their structure"
+    required: true
+  - name: props
+    type: array
+    description: "Component API (props with types, defaults, descriptions)"
+    required: true
+  - name: tokens_used
+    type: array
+    description: "Design tokens consumed by this component"
+    required: true
+  - name: accessibility
+    type: object
+    description: "ARIA roles, keyboard navigation, screen reader behavior"
+    required: true
+  - name: responsive_behavior
+    type: object
+    description: "How component adapts across breakpoints"
+    required: false
+
+rules:
+  - id: tokens-required
+    text: "Every visual property MUST reference a design token. No hardcoded values."
+    priority: critical
+  - id: accessibility-required
+    text: "Every component MUST have ARIA roles and keyboard navigation defined."
+    priority: critical
+  - id: state-coverage
+    text: "All 5 interactive states (default, hover, active, focus, disabled) are mandatory. Data display components must also include populated, empty, loading, error, and skeleton."
+    priority: critical
+  - id: no-placeholder-content
+    text: "All example content in component specs must be domain-realistic. No lorem ipsum or generic names."
+    priority: high

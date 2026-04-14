@@ -1,0 +1,33 @@
+# Standard Flow Workflow Domain — PRISM L3
+# Balanced pipeline for moderate tasks (features, integrations, brownfield enhancements)
+# Uses 8 agents — between Quick Flow (4) and Full Flow (12)
+
+steps:
+  - brief
+  - detail
+  - architect
+  - tasks
+  - qa-planning
+  - dev
+  - qa-implementation
+  - devops
+
+rules:
+  - id: sf-scope
+    text: "Standard Flow targets 2-5 requirements. Escalate to full pipeline if scope exceeds this range."
+    priority: critical
+  - id: sf-quality
+    text: "Both QA gates (planning and implementation) are mandatory. Score >= 95% required at each gate."
+    priority: critical
+  - id: sf-no-ux-skip
+    text: "UX agent is excluded. If design-heavy requirements surface, escalate to full pipeline."
+    priority: high
+  - id: sf-no-phases
+    text: "Phases agent is excluded. Tasks agent handles scope decomposition directly from PRD + Architecture."
+    priority: high
+  - id: sf-escalation-up
+    text: "If architect discovers multi-service complexity or QA finds UX gaps, offer escalation to full pipeline."
+    priority: high
+  - id: sf-escalation-down
+    text: "If detail finds only 1 simple requirement and architect confirms no changes needed, suggest quick flow."
+    priority: medium

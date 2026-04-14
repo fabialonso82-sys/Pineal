@@ -1,0 +1,24 @@
+version: 4.1.1
+installed_at: "2026-04-04T17:15:57.180Z"
+updated_at: "2026-04-04T17:15:57.180Z"
+installer_version: 4.1.1
+project_type: greenfield
+language: pt
+ides:
+  - claude-code
+  - antigravity
+providers:
+  claude:
+    enabled: true
+    primary: true
+  gemini:
+    enabled: false
+    model_default: pro
+    primary: false
+  codex:
+    enabled: false
+    model_default: codex
+    primary: false
+telemetry:
+  enabled: true
+  anonymous_id: null

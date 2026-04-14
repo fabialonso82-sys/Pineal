@@ -1,0 +1,153 @@
+# Brandbook Template
+# Used by: UX Agent (Phase 0: Brand Identity)
+# Language: English (Constitution Article VII)
+
+template:
+  name: Brandbook
+  version: "1.0.0"
+  description: >
+    Brand identity foundation document. Defines voice, visual language,
+    typography rationale, color philosophy, spacing rhythm, and iconography
+    style. Must be completed BEFORE design tokens.
+
+output_path: chati.dev/artifacts/4-UX/brandbook.md
+
+sections:
+  - brand_voice
+  - visual_language
+  - typography_rationale
+  - color_philosophy
+  - spacing_rhythm
+  - iconography_style
+  - motion_philosophy
+
+brand_voice:
+  description: "Brand personality, tone, and communication style"
+  fields:
+    - name: personality_traits
+      type: array
+      description: "3-5 adjectives defining the brand personality"
+    - name: tone_spectrum
+      type: object
+      description: "Formal vs casual, technical vs approachable spectrum"
+    - name: writing_guidelines
+      type: array
+      description: "Dos and don'ts for brand voice"
+    - name: example_phrases
+      type: array
+      description: "Sample phrases demonstrating brand voice"
+
+visual_language:
+  description: "Core visual principles and aesthetic direction"
+  fields:
+    - name: design_principles
+      type: array
+      description: "3-5 guiding principles for visual design"
+    - name: mood_keywords
+      type: array
+      description: "Keywords capturing the visual mood"
+    - name: inspiration_references
+      type: array
+      description: "Visual references and mood board elements"
+
+typography_rationale:
+  description: "Font selection rationale and typographic hierarchy"
+  fields:
+    - name: primary_font
+      type: object
+      description: "Primary typeface and why it was chosen"
+    - name: secondary_font
+      type: object
+      description: "Secondary typeface for contrast"
+    - name: hierarchy_rules
+      type: array
+      description: "Heading, body, caption sizing rationale"
+
+color_philosophy:
+  description: "Color palette rationale and emotional associations"
+  fields:
+    - name: industry_specific_reasoning
+      type: string
+      description: "Why these colors for THIS industry/sector — must reference Industry-Specific Palette Reasoning table from Directive 4"
+    - name: primary_palette
+      type: array
+      description: "Primary colors with emotional rationale"
+    - name: semantic_mapping
+      type: object
+      description: "Color-to-meaning mapping (success, warning, error)"
+    - name: accessibility_notes
+      type: string
+      description: "WCAG contrast compliance notes"
+    - name: bias_check
+      type: object
+      description: "Anti-bias validation: confirm primary color is NOT generic SaaS blue, saturation is intentional, neutral scale has 9+ steps"
+
+spacing_rhythm:
+  description: "Spacing scale rationale and rhythm system"
+  fields:
+    - name: base_unit
+      type: number
+      description: "Base spacing unit in pixels"
+    - name: scale_rationale
+      type: string
+      description: "Why this scale was chosen (4px, 8px, etc.)"
+    - name: rhythm_rules
+      type: array
+      description: "Rules for consistent vertical and horizontal rhythm"
+
+iconography_style:
+  description: "Icon style direction and usage philosophy"
+  fields:
+    - name: style_direction
+      type: string
+      description: "Outlined, filled, duotone, etc."
+    - name: stroke_weight
+      type: string
+      description: "Consistent stroke weight for icon set"
+    - name: metaphor_guidelines
+      type: array
+      description: "Guidelines for icon metaphor selection"
+
+motion_philosophy:
+  description: "Animation personality and motion system definition (Directive 6)"
+  fields:
+    - name: scroll_personality
+      type: enum
+      values: [Energetic, Elegant, Minimal, Playful]
+      description: "Animation character aligned with brand visual direction"
+    - name: micro_animation_style
+      type: string
+      description: "Description of hover and interaction animation character"
+    - name: timing_defaults
+      type: object
+      description: "Default duration and easing tokens for this brand"
+      sub_fields:
+        - name: primary_duration
+          type: string
+          description: "Primary animation duration token (e.g. --motion-duration-normal)"
+          default: "--motion-duration-normal (350ms)"
+        - name: primary_easing
+          type: string
+          description: "Primary easing token (e.g. --motion-ease-standard)"
+          default: "--motion-ease-standard"
+    - name: library
+      type: string
+      description: "Animation library for this project's stack"
+      examples:
+        - "motion/react (React/Next.js)"
+        - "@vueuse/motion (Vue 3)"
+        - "CSS animations (plain HTML/CSS)"
+
+rules:
+  - id: brand-before-tokens
+    text: "Brandbook MUST be completed before design tokens are defined."
+    priority: critical
+  - id: brand-consistency
+    text: "All visual decisions must trace back to brandbook principles."
+    priority: high
+  - id: brand-voice-artifacts
+    text: "All user-facing text in artifacts must follow brand voice guidelines."
+    priority: high
+  - id: brand-no-default-blue
+    text: "Primary color MUST NOT be generic SaaS blue (#3B82F6 or similar) unless the brand explicitly requires it with documented rationale."
+    priority: high

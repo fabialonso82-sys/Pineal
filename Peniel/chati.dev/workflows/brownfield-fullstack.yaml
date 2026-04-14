@@ -1,0 +1,135 @@
+# Brownfield Fullstack Workflow
+# Handles: feature addition, refactoring, modernization
+
+workflow:
+  id: brownfield-fullstack
+  name: Brownfield Fullstack Development
+  version: "1.0.0"
+  type: brownfield
+  project_types: [feature-addition, refactoring, modernization, enhancement]
+  description: >
+    Development pipeline for existing projects. Key difference from greenfield:
+    Architect comes BEFORE Detail to understand existing constraints first.
+    brownfield-wu ALWAYS runs Deep Discovery with 3 scout calls.
+
+phases:
+  - phase: 0
+    name: Deep Discovery
+    category: DISCOVER
+    sequence:
+      - agent: brownfield-wu
+        action: full-discovery
+        creates: [chati.dev/artifacts/0-WU/wu-full-report.md]
+        notes: >
+          Both axes (technical + operational). ALWAYS runs Deep Discovery
+          with 3 scout calls: Architect, UX, QA in scout mode.
+
+  - phase: 1
+    name: Problem Definition
+    category: DISCOVER
+    sequence:
+      - agent: brief
+        action: problem-extraction
+        creates: [chati.dev/artifacts/1-Brief/brief-report.md]
+        notes: "Informed by existing codebase context from WU"
+
+  - phase: 2
+    name: Architecture Assessment
+    category: PLAN
+    sequence:
+      - agent: architect
+        action: assess-architecture
+        creates: [chati.dev/artifacts/3-Architecture/architecture.md]
+        template: fullstack-architecture-tmpl.yaml
+        notes: >
+          Architect comes BEFORE Detail in brownfield.
+          Assesses existing architecture, proposes changes.
+
+  - phase: 3
+    name: Product Specification
+    category: PLAN
+    sequence:
+      - agent: detail
+        action: create-prd
+        creates: [chati.dev/artifacts/2-PRD/prd.md]
+        template: brownfield-prd-tmpl.yaml
+        notes: "PRD informed by architectural constraints"
+      - agent: ux
+        action: define-experience
+        creates: [chati.dev/artifacts/4-UX/ux-specification.md]
+        notes: "Includes Design System audit of existing code"
+
+  - phase: 4
+    name: Execution Planning
+    category: PLAN
+    sequence:
+      - agent: phases
+        action: create-roadmap
+        creates: [chati.dev/artifacts/5-Phases/phases.md]
+      - agent: tasks
+        action: create-tasks
+        creates: [chati.dev/artifacts/6-Tasks/tasks.md]
+        template: task-tmpl.yaml
+
+  - phase: 5
+    name: Planning Quality Gate
+    category: PLAN
+    sequence:
+      - agent: qa-planning
+        action: validate-traceability
+        creates: [chati.dev/artifacts/7-QA-Planning/qa-planning-report.md]
+        template: qa-gate-tmpl.yaml
+
+  - phase: 6
+    name: Implementation
+    category: BUILD
+    sequence:
+      - agent: dev
+        action: implement-tasks
+      - agent: qa-implementation
+        action: validate-code
+        creates: [chati.dev/artifacts/9-QA-Implementation/qa-implementation-report.md]
+
+  - phase: 7
+    name: Deployment
+    category: DEPLOY
+    sequence:
+      - agent: devops
+        action: deploy
+        creates: [chati.dev/artifacts/10-Deploy/deploy-report.md]
+
+transitions:
+  discover_to_plan:
+    trigger: "brief.status == completed"
+    type: automatic
+    action: "Update project.state = plan"
+  plan_to_build:
+    trigger: "qa-planning.score >= 95"
+    type: automatic
+    action: "Update project.state = build"
+  build_to_validate:
+    trigger: "dev.status == completed"
+    type: automatic
+    action: "Update project.state = validate"
+  validate_to_preview:
+    trigger: "qa-implementation.status == approved"
+    type: automatic
+    action: "Launch user preview (orchestrator-preview task)"
+    notes: "User must approve preview before advancing to deploy"
+  preview_to_deploy:
+    trigger: "user_preview.decision in [approve_keep, approve_kill]"
+    type: manual
+    action: "Update project.state = deploy"
+    notes: "User explicitly approves the preview"
+  deploy_to_completed:
+    trigger: "devops.status == completed"
+    type: automatic
+    action: "Update project.state = completed"
+  backward_to_plan:
+    trigger: "qa-implementation.issue_type in [spec, architecture]"
+    type: backward
+    action: "Update project.state = plan, route to responsible agent"
+  backward_to_discover:
+    trigger: "qa-implementation.issue_type in [requirements, scope]"
+    type: backward
+    action: "Update project.state = discover, route to brief or wu agent"

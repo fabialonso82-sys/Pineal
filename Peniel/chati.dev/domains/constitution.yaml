@@ -1,0 +1,109 @@
+# Constitution Domain — Extracted governance rules for PRISM L0
+# Source: chati.dev/constitution.md (19 Articles + Preamble)
+
+summary: >
+  Constitution governance: self-validation required (loop until tier-specific threshold met),
+  guided options (1,2,3 format), persistent session state, two-layer handoff,
+  language protocol (interaction=user lang, artifacts=English),
+  deviation protocol, mode governance (planning/build/deploy),
+  context brackets, memory governance, registry governance,
+  session lock, model governance.
+
+articleCount: 19
+
+rules:
+  - id: art-i
+    text: "Agents must follow their assigned role, authority boundaries, and domain scope."
+    priority: critical
+
+  - id: art-ii
+    text: "Quality self-validation required. Tiered thresholds: QA >= 95%, standard >= 90%, discovery >= 85%. Loop until met."
+    priority: critical
+
+  - id: art-iii
+    text: "Memory and context must be managed through designated systems (PRISM)."
+    priority: high
+
+  - id: art-iv
+    text: "No destructive operations without user confirmation. No secrets in system files. SAST mandatory."
+    priority: critical
+
+  - id: art-v
+    text: "Communication follows structured protocol: guided options (1,2,3), clear formatting. No em dashes or AI-detectable writing patterns."
+    priority: normal
+
+  - id: art-vi
+    text: "Design system tokens must be respected when generating UI code."
+    priority: normal
+
+  - id: art-vii
+    text: "All documentation and artifacts must be in English."
+    priority: high
+
+  - id: art-viii
+    text: "Two-layer handoff documents required between agents (executive summary + detailed)."
+    priority: high
+
+  - id: art-ix
+    text: "Agent-driven interaction model with power user escape hatch."
+    priority: normal
+
+  - id: art-x
+    text: "Dynamic self-validation with binary pass/fail criteria."
+    priority: high
+
+  - id: art-xi
+    text: "Mode governance: planning (read all, write chati.dev/), build (full), deploy (full + infra)."
+    priority: critical
+
+  - id: art-xii
+    text: "Context brackets are calculated, not hardcoded. CRITICAL = L0+L1 only. Handoff mandatory at < 15%."
+    priority: high
+
+  - id: art-xiii
+    text: "Memory capture is automatic. Never auto-modify user files. Proposals require explicit approval."
+    priority: high
+
+  - id: art-xiv
+    text: "Framework registry is source of truth. REUSE > ADAPT > CREATE preference."
+    priority: normal
+
+  - id: art-xv
+    text: "Session lock is mandatory when session is active. Exit requires explicit user intent."
+    priority: critical
+
+  - id: art-xvi
+    text: "Model governance: respect per-agent model assignments. No downgrade from assigned model."
+    priority: high
+
+  - id: art-xvii
+    text: "Execution mode governance: QA gates >= 95%, other agents >= 90%. Safety net with circuit breaker (3 failures)."
+    priority: critical
+
+articles:
+  article-xviii:
+    name: "Execution Profile Governance"
+    enforcement: block
+    rules:
+      - profile-explore: "In explore profile, agents read and analyze only. No write operations permitted."
+        priority: critical
+      - profile-guided: "In guided profile, agents propose actions and wait for user confirmation before writes."
+        priority: high
+      - profile-autonomous: "In autonomous profile, agents execute without confirmation when gate scores >= 95%."
+        priority: critical
+      - profile-always-confirm: "Destructive operations, deployments, deviations, and backward transitions always require confirmation regardless of profile."
+        priority: critical
+  article-xix:
+    name: "Multi-CLI Governance"
+    enforcement: guide
+    rules:
+      - provider-registry: "CLI Provider Registry is source of truth for provider capabilities."
+        priority: high
+      - provider-agnostic-handoff: "Handoff format is provider-agnostic. All agents produce handoffs in the same two-layer format."
+        priority: critical
+      - provider-fallback: "If a configured provider is unavailable, fall back to primary provider (claude) with warning."
+        priority: high
+      - provider-hooks: "Hook-based governance applies only to providers with hook support. Others use prompt injection."
+        priority: high
+      - provider-context-files: "Context file generation is automatic when a provider is enabled."
+        priority: normal

@@ -1,0 +1,80 @@
+{
+  "$schema": "https://raw.githubusercontent.com/anthropics/claude-code/main/schema/hooks.json",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node chati.dev/hooks/prism-engine.js"
+          },
+          {
+            "type": "command",
+            "command": "node chati.dev/hooks/model-governance.js"
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node chati.dev/hooks/session-digest.js"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node chati.dev/hooks/read-protection.js"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node chati.dev/hooks/mode-governance.js"
+          },
+          {
+            "type": "command",
+            "command": "node chati.dev/hooks/constitution-guard.js"
+          },
+          {
+            "type": "command",
+            "command": "node chati.dev/hooks/undercover-guard.js"
+          },
+          {
+            "type": "command",
+            "command": "node chati.dev/hooks/style-guard.js"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node chati.dev/hooks/constitution-guard.js"
+          },
+          {
+            "type": "command",
+            "command": "node chati.dev/hooks/undercover-guard.js"
+          },
+          {
+            "type": "command",
+            "command": "node chati.dev/hooks/style-guard.js"
+          }
+        ]
+      }
+    ]
+  }
+}

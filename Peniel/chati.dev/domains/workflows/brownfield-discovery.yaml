@@ -1,0 +1,17 @@
+# Brownfield Discovery Workflow Domain — PRISM L3
+# Standalone discovery pipeline (no implementation)
+# Agent: brownfield-wu only (7 phases of analysis)
+
+steps:
+  - brownfield-wu
+
+rules:
+  - id: disc-deep
+    text: "Deep discovery is mandatory. Analyze full codebase before proceeding."
+    priority: critical
+  - id: disc-readonly
+    text: "Discovery workflow does not modify project code."
+    priority: high
+  - id: disc-standalone
+    text: "Brownfield discovery is a standalone workflow using only brownfield-wu across 7 analysis phases."
+    priority: normal

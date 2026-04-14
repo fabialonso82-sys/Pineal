@@ -1,0 +1,95 @@
+# Icon System Template
+# Used by: UX Agent (Phase 0: Brand Identity / Iconography)
+# Language: English (Constitution Article VII)
+
+template:
+  name: Icon System
+  version: "1.0.0"
+  description: >
+    Icon library selection, sizing scale, usage guidelines, and inventory.
+    Aligned with brandbook iconography style.
+
+output_path: chati.dev/artifacts/4-UX/icon-system.md
+
+sections:
+  library_selection:
+    description: "Chosen icon library and rationale"
+    fields:
+      - name: library_name
+        type: string
+        description: "Selected icon library (e.g., Lucide, Phosphor, Heroicons)"
+      - name: rationale
+        type: string
+        description: "Why this library was chosen"
+      - name: style
+        type: enum
+        values: [outlined, filled, duotone, solid]
+        description: "Icon style variant"
+      - name: license
+        type: string
+        description: "Icon library license (MIT, Apache, etc.)"
+
+  sizing_scale:
+    description: "Icon size scale aligned with spacing tokens"
+    fields:
+      - name: xs
+        type: number
+        description: "Extra small icon size (12-14px)"
+      - name: sm
+        type: number
+        description: "Small icon size (16px)"
+      - name: md
+        type: number
+        description: "Medium icon size (20-24px)"
+      - name: lg
+        type: number
+        description: "Large icon size (28-32px)"
+      - name: xl
+        type: number
+        description: "Extra large icon size (40-48px)"
+      - name: xxl
+        type: number
+        description: "Display icon size (56-64px)"
+
+  usage_guidelines:
+    description: "Rules for consistent icon usage"
+    fields:
+      - name: with_text
+        type: string
+        description: "When to pair icons with text labels"
+      - name: standalone
+        type: string
+        description: "When icons can stand alone (with aria-label)"
+      - name: color_rules
+        type: string
+        description: "How icons inherit or override color tokens"
+      - name: touch_target
+        type: string
+        description: "Minimum touch target size (44x44px for mobile)"
+
+  icon_inventory:
+    description: "Catalog of icons used in the project"
+    fields:
+      - name: navigation
+        type: array
+        description: "Icons used in navigation elements"
+      - name: actions
+        type: array
+        description: "Icons for user actions (add, edit, delete, etc.)"
+      - name: status
+        type: array
+        description: "Icons for status indicators (success, warning, error, info)"
+      - name: content
+        type: array
+        description: "Icons for content types (file, folder, image, etc.)"
+
+rules:
+  - id: icon-library-consistency
+    text: "Use ONE icon library per project. Do not mix libraries."
+    priority: critical
+  - id: icon-accessibility
+    text: "Standalone icons MUST have aria-label. Decorative icons use aria-hidden."
+    priority: critical
+  - id: icon-sizing-alignment
+    text: "Icon sizes must align with the spacing token scale from design tokens."
+    priority: high

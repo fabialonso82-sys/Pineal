@@ -1,0 +1,55 @@
+# Design Token Template
+# Used by: UX Agent (Phase 1: Design Tokens)
+# Language: English (Constitution Article VII)
+
+template:
+  name: Design Tokens
+  version: "1.0.0"
+  description: >
+    Structured design token system with 4 layers: primitive, semantic,
+    component, and utility. Derived from brandbook decisions.
+
+output_path: chati.dev/artifacts/4-UX/design-tokens.md
+
+layers:
+  - primitive
+  - semantic
+  - component
+  - utility
+
+token_categories:
+  color:
+    primitive: "Raw color values (hex, hsl)"
+    semantic: "Mapped to meaning (primary, success, error)"
+    component: "Component-specific (button-bg, card-border)"
+  spacing:
+    primitive: "Base unit multiples (4, 8, 12, 16, 24, 32, 48, 64)"
+    semantic: "Mapped to usage (compact, default, relaxed)"
+    component: "Component-specific (card-padding, input-gap)"
+  typography:
+    primitive: "Font families, raw sizes, weights"
+    semantic: "Mapped to roles (heading, body, caption, label)"
+    component: "Component-specific (button-text, input-label)"
+  radius:
+    primitive: "Raw radius values (0, 2, 4, 8, 12, full)"
+    semantic: "Mapped to shape intent (sharp, soft, round, pill)"
+  shadow:
+    primitive: "Raw shadow definitions (offset, blur, spread, color)"
+    semantic: "Mapped to elevation (flat, raised, floating, overlay)"
+  motion:
+    primitive: "Duration and easing values"
+    semantic: "Mapped to intent (enter, exit, emphasis, feedback)"
+
+rules:
+  - id: tokens-after-brandbook
+    text: "Design tokens MUST be derived from brandbook decisions."
+    priority: critical
+  - id: primitive-first
+    text: "Define primitive tokens before semantic. Semantic references primitive."
+    priority: high
+  - id: token-naming
+    text: "Use consistent naming: layer-category-variant (e.g., color-primary-500)."
+    priority: high
+  - id: accessibility-contrast
+    text: "All text color tokens must meet WCAG AA contrast ratio (4.5:1)."
+    priority: critical
